@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>📢 Complaint Box</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<script>
+if (localStorage.getItem("login") !== "true") {
+    window.location.href = "login.html";
+}
+</script>
+
+<h1>📢 Complaint Box</h1>
+
+<button onclick="logout()">Logout</button>
+
+<!-- Add Complaint -->
+<div class="form">
+    <input id="title" placeholder="Complaint Title"><br>
+    <textarea id="desc" placeholder="Enter complaint..."></textarea><br>
+    <button onclick="addComplaint()">Submit</button>
+</div>
+
+<!-- Search -->
+<input id="search" placeholder="Search..." onkeyup="searchComplaint()">
+
+<!-- Complaint List -->
+<div id="list"></div>
+
+<script src="storage.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
