@@ -6,6 +6,6 @@ function login() {
         localStorage.setItem("login", "true");
         window.location.href = "index.html";
     } else {
-        alert("Invalid username or password");
+        alert("Invalid login");
     }
 }
