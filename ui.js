@@ -10,14 +10,12 @@ setTimeout(()=>t.classList.remove("show"),2000);
 function render(list){
 const el=document.getElementById("list");
 el.innerHTML="";
-
 list.forEach(c=>{
 el.innerHTML+=`
 <div class="card">
 <h4>${c.title}</h4>
 <p>${c.desc}</p>
 <b>${c.status}</b> | ${c.priority}<br>
-
 <button onclick="edit(${c.id})">✏️</button>
 <button onclick="solve(${c.id})">✔</button>
 <button onclick="del(${c.id})">❌</button>
@@ -37,13 +35,13 @@ solved.innerText=s;
 if(barChart) barChart.destroy();
 if(pieChart) pieChart.destroy();
 
-barChart=new Chart(barChart,{
+barChart=new Chart(document.getElementById("barChart"),{
 type:"bar",
 data:{labels:["Total","Pending","Solved"],
 datasets:[{data:[t,p,s]}]}
 });
 
-pieChart=new Chart(pieChart,{
+pieChart=new Chart(document.getElementById("pieChart"),{
 type:"pie",
 data:{labels:["Pending","Solved"],
 datasets:[{data:[p,s]}]}

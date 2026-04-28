@@ -3,8 +3,6 @@
 <head>
 <title>📢 Complaint Menu</title>
 <link rel="stylesheet" href="style.css">
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
@@ -22,6 +20,9 @@ if(localStorage.getItem("login")!=="true") location="login.html";
 <button onclick="route('dashboard')">📊</button>
 <button onclick="route('profile')">👤</button>
 <button onclick="route('contact')">📞</button>
+<button onclick="route('history')">📜</button>
+<button onclick="route('settings')">⚙️</button>
+<button onclick="route('help')">❓</button>
 <button onclick="toggleTheme()">🌙</button>
 <button onclick="logout()">🚪</button>
 </nav>
@@ -32,19 +33,14 @@ if(localStorage.getItem("login")!=="true") location="login.html";
 <div class="card">
 <input id="title" placeholder="Title">
 <textarea id="desc" placeholder="Description"></textarea>
-
 <select id="priority">
-<option>Low</option>
-<option>Medium</option>
-<option>High</option>
+<option>Low</option><option>Medium</option><option>High</option>
 </select>
-
 <button onclick="addComplaint()">Add</button>
 </div>
 
 <div class="card">
-<input id="search" placeholder="🔍 Search..." oninput="applyFilters()">
-
+<input id="search" placeholder="Search..." oninput="applyFilters()">
 <select id="filterStatus" onchange="applyFilters()">
 <option value="">All</option>
 <option>Pending</option>
@@ -59,11 +55,9 @@ if(localStorage.getItem("login")!=="true") location="login.html";
 <section id="dashboard" class="hide">
 <div class="card">
 <h3>📊 Dashboard</h3>
-
 <p>Total: <b id="total"></b></p>
 <p>Pending: <b id="pending"></b></p>
 <p>Solved: <b id="solved"></b></p>
-
 <canvas id="barChart"></canvas>
 <canvas id="pieChart"></canvas>
 </div>
@@ -83,8 +77,35 @@ if(localStorage.getItem("login")!=="true") location="login.html";
 <section id="contact" class="hide">
 <div class="card">
 <h3>📞 Contact</h3>
-<textarea id="msg" placeholder="Message"></textarea>
+<textarea id="msg"></textarea>
 <button onclick="sendMsg()">Send</button>
+</div>
+</section>
+
+<!-- HISTORY -->
+<section id="history" class="hide">
+<div class="card">
+<h3>📜 History</h3>
+<div id="historyList"></div>
+</div>
+</section>
+
+<!-- SETTINGS -->
+<section id="settings" class="hide">
+<div class="card">
+<h3>⚙️ Settings</h3>
+<button onclick="toggleTheme()">🌙 Dark Mode</button>
+<button onclick="clearData()">🗑 Clear Data</button>
+</div>
+</section>
+
+<!-- HELP -->
+<section id="help" class="hide">
+<div class="card">
+<h3>❓ Help</h3>
+<p>Add complaint → click Add</p>
+<p>Solve → ✔</p>
+<p>Delete → ❌</p>
 </div>
 </section>
 
@@ -93,6 +114,5 @@ if(localStorage.getItem("login")!=="true") location="login.html";
 <script src="store.js"></script>
 <script src="ui.js"></script>
 <script src="app.js"></script>
-
 </body>
 </html>

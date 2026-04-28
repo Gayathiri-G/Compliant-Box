@@ -5,14 +5,7 @@ window.onload=()=>render(state);
 function addComplaint(){
 if(!title.value||!desc.value) return toast("Fill all fields");
 
-const c={
-id:Date.now(),
-title:title.value,
-desc:desc.value,
-status:"Pending",
-priority:priority.value
-};
-
+const c={id:Date.now(),title:title.value,desc:desc.value,status:"Pending",priority:priority.value};
 state.unshift(c);
 setData(state);
 render(state);
@@ -38,7 +31,7 @@ const c=state.find(x=>x.id==id);
 title.value=c.title;
 desc.value=c.desc;
 del(id);
-toast("Edit and resubmit");
+toast("Edit & re-add");
 }
 
 function applyFilters(){
@@ -46,36 +39,40 @@ let list=getData();
 const q=search.value.toLowerCase();
 const st=filterStatus.value;
 
-list=list.filter(x=>
-x.title.toLowerCase().includes(q) &&
-(st?x.status==st:true)
-);
-
+list=list.filter(x=>x.title.toLowerCase().includes(q)&&(st?x.status==st:true));
 render(list);
 }
 
 function route(p){
-["home","dashboard","profile","contact"].forEach(id=>{
+["home","dashboard","profile","contact","history","settings","help"].forEach(id=>{
 document.getElementById(id).classList.add("hide");
 });
-
 document.getElementById(p).classList.remove("hide");
 
 if(p==="dashboard") renderDashboard(getData());
+if(p==="history") renderHistory();
 }
 
-function saveProfile(){
-setProfile({name:pname.value,email:pemail.value});
-toast("Saved");
+function renderHistory(){
+const data=getData();
+const el=document.getElementById("historyList");
+el.innerHTML="";
+data.forEach(c=>{
+el.innerHTML+=`<div class="card">${c.title} - ${c.status}</div>`;
+});
 }
 
-function sendMsg(){
-toast("Message sent");
+function clearData(){
+localStorage.removeItem("data");
+state=[];
+render(state);
+toast("All cleared");
 }
 
-function toggleTheme(){
-document.body.classList.toggle("dark");
-}
+function saveProfile(){toast("Saved")}
+function sendMsg(){toast("Message sent")}
+
+function toggleTheme(){document.body.classList.toggle("dark")}
 
 function logout(){
 localStorage.removeItem("login");
