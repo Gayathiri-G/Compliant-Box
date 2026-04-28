@@ -1,8 +1,12 @@
 const list = document.getElementById("list");
 
-// Load complaints
+// Load data
 window.onload = function () {
     displayComplaints(getComplaints());
+
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark");
+    }
 };
 
 // Add complaint
@@ -29,7 +33,7 @@ function addComplaint() {
     document.getElementById("desc").value = "";
 }
 
-// Display complaints
+// Display
 function displayComplaints(data) {
     list.innerHTML = "";
 
@@ -48,14 +52,14 @@ function displayComplaints(data) {
     });
 }
 
-// Delete complaint
+// Delete
 function deleteComplaint(id) {
     let data = getComplaints().filter(c => c.id !== id);
     saveComplaints(data);
     displayComplaints(data);
 }
 
-// Search complaint
+// Search
 function searchComplaint() {
     const value = document.getElementById("search").value.toLowerCase();
     const data = getComplaints();
@@ -72,4 +76,15 @@ function searchComplaint() {
 function logout() {
     localStorage.removeItem("login");
     window.location.href = "login.html";
+}
+
+// Theme
+function toggleTheme() {
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+    } else {
+        localStorage.setItem("theme", "light");
+    }
 }
