@@ -10,7 +10,10 @@ function addComplaint() {
     const title = document.getElementById("title").value.trim();
     const desc = document.getElementById("desc").value.trim();
 
-    if (!title || !desc) return alert("Fill all fields");
+    if (!title || !desc) {
+        alert("Enter all fields");
+        return;
+    }
 
     const complaint = {
         id: Date.now(),
@@ -25,6 +28,7 @@ function addComplaint() {
     saveComplaints(data);
 
     displayComplaints(data);
+    updateDashboard(); // ✅ FIX
 
     document.getElementById("title").value = "";
     document.getElementById("desc").value = "";
@@ -36,13 +40,12 @@ function displayComplaints(data) {
 
     data.forEach(item => {
         const div = document.createElement("div");
-        div.className = "card";
 
         div.innerHTML = `
             <h3>${item.title}</h3>
             <p>${item.desc}</p>
-            <span class="status ${item.status.toLowerCase()}">${item.status}</span>
-            <br><small>${item.date}</small><br>
+            <b>${item.status}</b><br>
+            <small>${item.date}</small><br>
             <button onclick="markSolved(${item.id})">✔ Solve</button>
             <button onclick="deleteComplaint(${item.id})">❌ Delete</button>
         `;
@@ -55,6 +58,7 @@ function deleteComplaint(id) {
     let data = getComplaints().filter(c => c.id !== id);
     saveComplaints(data);
     displayComplaints(data);
+    updateDashboard(); // ✅ FIX
 }
 
 function markSolved(id) {
@@ -65,6 +69,7 @@ function markSolved(id) {
 
     saveComplaints(data);
     displayComplaints(data);
+    updateDashboard(); // ✅ FIX
 }
 
 function searchComplaint() {
@@ -80,14 +85,34 @@ function searchComplaint() {
 }
 
 function showPage(page) {
-    document.getElementById("homePage").style.display = "none";
-    document.getElementById("aboutPage").style.display = "none";
+    const home = document.getElementById("homePage");
+    const about = document.getElementById("aboutPage");
+    const dashboard = document.getElementById("dashboardPage");
+
+    home.style.display = "none";
+    about.style.display = "none";
+    dashboard.style.display = "none";
 
     if (page === "home") {
-        document.getElementById("homePage").style.display = "block";
-    } else {
-        document.getElementById("aboutPage").style.display = "block";
+        home.style.display = "block";
+    } 
+    else if (page === "about") {
+        about.style.display = "block";
+    } 
+    else if (page === "dashboard") {
+        dashboard.style.display = "block";
+        updateDashboard(); // ✅ IMPORTANT
     }
+}
+
+function updateDashboard() {
+    const data = getComplaints();
+
+    document.getElementById("total").innerText = data.length;
+    document.getElementById("pending").innerText =
+        data.filter(c => c.status === "Pending").length;
+    document.getElementById("solved").innerText =
+        data.filter(c => c.status === "Solved").length;
 }
 
 function logout() {

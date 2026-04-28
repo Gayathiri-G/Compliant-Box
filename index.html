@@ -14,9 +14,9 @@ if (localStorage.getItem("login") !== "true") {
 
 <!-- HEADER -->
 <div class="header">
-    <h1 class="logo">📢 Complaint Menu</h1>
+    <h1>📢 Complaint Menu</h1>
 
-    <div class="nav">
+    <div>
         <button onclick="showPage('home')">🏠</button>
         <button onclick="showPage('about')">ℹ️</button>
         <button onclick="showPage('dashboard')">📊</button>
@@ -27,31 +27,23 @@ if (localStorage.getItem("login") !== "true") {
 
 <!-- HOME -->
 <div id="homePage">
+    <div class="form">
+        <h3>Add Complaint</h3>
+        <input id="title" placeholder="Complaint Title"><br>
+        <textarea id="desc" placeholder="Enter complaint..."></textarea><br>
+        <button onclick="addComplaint()">Submit</button>
+    </div>
 
-<div class="form glass">
-    <h3>Add Complaint</h3>
-    <input id="title" placeholder="Complaint Title">
-    <textarea id="desc" placeholder="Enter complaint..."></textarea>
-    <button onclick="addComplaint()">🚀 Submit</button>
-</div>
+    <input id="search" placeholder="Search..." onkeyup="searchComplaint()">
 
-<input id="search" placeholder="🔍 Search..." onkeyup="searchComplaint()">
-
-<div id="list" class="grid"></div>
-
+    <div id="list"></div>
 </div>
 
 <!-- ABOUT -->
 <div id="aboutPage" style="display:none;">
     <div class="about-box">
         <h3>About Project</h3>
-        <p>This is a modern Complaint Menu system.</p>
-        <ul>
-            <li>Add / Delete complaints</li>
-            <li>Search complaints</li>
-            <li>Status tracking</li>
-            <li>Dark mode</li>
-        </ul>
+        <p>This is a Complaint Menu system with dashboard.</p>
     </div>
 </div>
 
@@ -59,10 +51,9 @@ if (localStorage.getItem("login") !== "true") {
 <div id="dashboardPage" style="display:none;">
     <div class="about-box">
         <h3>📊 Dashboard</h3>
-
-        <p>Total: <span id="total"></span></p>
-        <p>Pending: <span id="pending"></span></p>
-        <p>Solved: <span id="solved"></span></p>
+        <p>Total: <span id="total">0</span></p>
+        <p>Pending: <span id="pending">0</span></p>
+        <p>Solved: <span id="solved">0</span></p>
     </div>
 </div>
 
