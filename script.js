@@ -87,4 +87,8 @@ function toggleTheme() {
     } else {
         localStorage.setItem("theme", "light");
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> c6dcab0fccaaea6838947b51b85a7ff5c2d9e15d
