@@ -1,9 +1,9 @@
 function login() {
-    const user = document.getElementById("username").value;
-    const pass = document.getElementById("password").value;
+    const u = document.getElementById("username").value;
+    const p = document.getElementById("password").value;
 
-    if (user === "admin" && pass === "1234") {
-        localStorage.setItem("login", "true");
+    if (u === "admin" && p === "1234") {
+        localStorage.setItem("login","true");
         window.location.href = "index.html";
     } else {
         alert("Invalid login");

@@ -1,26 +1,20 @@
+let myChart;
+
 window.onload = function () {
     displayComplaints(getComplaints());
-
-    if (localStorage.getItem("theme") === "dark") {
-        document.body.classList.add("dark");
-    }
 };
 
 function addComplaint() {
     const title = document.getElementById("title").value.trim();
     const desc = document.getElementById("desc").value.trim();
 
-    if (!title || !desc) {
-        alert("Enter all fields");
-        return;
-    }
+    if (!title || !desc) return alert("Fill all fields");
 
     const complaint = {
         id: Date.now(),
         title,
         desc,
-        status: "Pending",
-        date: new Date().toLocaleString()
+        status: "Pending"
     };
 
     let data = getComplaints();
@@ -28,29 +22,23 @@ function addComplaint() {
     saveComplaints(data);
 
     displayComplaints(data);
-    updateDashboard(); // ✅ FIX
-
-    document.getElementById("title").value = "";
-    document.getElementById("desc").value = "";
+    updateDashboard();
 }
 
 function displayComplaints(data) {
     const list = document.getElementById("list");
     list.innerHTML = "";
 
-    data.forEach(item => {
-        const div = document.createElement("div");
-
-        div.innerHTML = `
-            <h3>${item.title}</h3>
-            <p>${item.desc}</p>
-            <b>${item.status}</b><br>
-            <small>${item.date}</small><br>
-            <button onclick="markSolved(${item.id})">✔ Solve</button>
-            <button onclick="deleteComplaint(${item.id})">❌ Delete</button>
+    data.forEach(c => {
+        list.innerHTML += `
+            <div>
+                <h3>${c.title}</h3>
+                <p>${c.desc}</p>
+                <b>${c.status}</b><br>
+                <button onclick="markSolved(${c.id})">✔</button>
+                <button onclick="deleteComplaint(${c.id})">❌</button>
+            </div>
         `;
-
-        list.appendChild(div);
     });
 }
 
@@ -58,7 +46,7 @@ function deleteComplaint(id) {
     let data = getComplaints().filter(c => c.id !== id);
     saveComplaints(data);
     displayComplaints(data);
-    updateDashboard(); // ✅ FIX
+    updateDashboard();
 }
 
 function markSolved(id) {
@@ -69,50 +57,60 @@ function markSolved(id) {
 
     saveComplaints(data);
     displayComplaints(data);
-    updateDashboard(); // ✅ FIX
+    updateDashboard();
 }
 
 function searchComplaint() {
-    const value = document.getElementById("search").value.toLowerCase();
+    const val = document.getElementById("search").value.toLowerCase();
     const data = getComplaints();
 
-    const filtered = data.filter(c =>
-        c.title.toLowerCase().includes(value) ||
-        c.desc.toLowerCase().includes(value)
+    displayComplaints(
+        data.filter(c =>
+            c.title.toLowerCase().includes(val) ||
+            c.desc.toLowerCase().includes(val)
+        )
     );
-
-    displayComplaints(filtered);
 }
 
 function showPage(page) {
-    const home = document.getElementById("homePage");
-    const about = document.getElementById("aboutPage");
-    const dashboard = document.getElementById("dashboardPage");
+    const pages = ["homePage","aboutPage","dashboardPage","profilePage","contactPage"];
+    pages.forEach(p => document.getElementById(p).style.display = "none");
 
-    home.style.display = "none";
-    about.style.display = "none";
-    dashboard.style.display = "none";
-
-    if (page === "home") {
-        home.style.display = "block";
-    } 
-    else if (page === "about") {
-        about.style.display = "block";
-    } 
-    else if (page === "dashboard") {
-        dashboard.style.display = "block";
-        updateDashboard(); // ✅ IMPORTANT
+    if (page === "home") document.getElementById("homePage").style.display = "block";
+    if (page === "about") document.getElementById("aboutPage").style.display = "block";
+    if (page === "dashboard") {
+        document.getElementById("dashboardPage").style.display = "block";
+        updateDashboard();
     }
+    if (page === "profile") document.getElementById("profilePage").style.display = "block";
+    if (page === "contact") document.getElementById("contactPage").style.display = "block";
 }
 
 function updateDashboard() {
     const data = getComplaints();
 
-    document.getElementById("total").innerText = data.length;
-    document.getElementById("pending").innerText =
-        data.filter(c => c.status === "Pending").length;
-    document.getElementById("solved").innerText =
-        data.filter(c => c.status === "Solved").length;
+    const total = data.length;
+    const pending = data.filter(c => c.status === "Pending").length;
+    const solved = data.filter(c => c.status === "Solved").length;
+
+    document.getElementById("total").innerText = total;
+    document.getElementById("pending").innerText = pending;
+    document.getElementById("solved").innerText = solved;
+
+    const ctx = document.getElementById("chart");
+
+    if (myChart) myChart.destroy();
+
+    myChart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ["Total", "Pending", "Solved"],
+            datasets: [{
+                data: [total, pending, solved],
+                backgroundColor: ["blue","orange","green"]
+            }]
+        }
+    });
 }
 
 function logout() {
@@ -122,10 +120,4 @@ function logout() {
 
 function toggleTheme() {
     document.body.classList.toggle("dark");
-
-    if (document.body.classList.contains("dark")) {
-        localStorage.setItem("theme", "dark");
-    } else {
-        localStorage.setItem("theme", "light");
-    }
 }

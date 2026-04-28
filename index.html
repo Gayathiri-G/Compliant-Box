@@ -3,6 +3,7 @@
 <head>
     <title>📢 Complaint Menu</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -20,6 +21,8 @@ if (localStorage.getItem("login") !== "true") {
         <button onclick="showPage('home')">🏠</button>
         <button onclick="showPage('about')">ℹ️</button>
         <button onclick="showPage('dashboard')">📊</button>
+        <button onclick="showPage('profile')">👤</button>
+        <button onclick="showPage('contact')">📞</button>
         <button onclick="toggleTheme()">🌙</button>
         <button onclick="logout()">🚪</button>
     </div>
@@ -43,7 +46,7 @@ if (localStorage.getItem("login") !== "true") {
 <div id="aboutPage" style="display:none;">
     <div class="about-box">
         <h3>About Project</h3>
-        <p>This is a Complaint Menu system with dashboard.</p>
+        <p>This is a Complaint Menu system with dashboard and charts.</p>
     </div>
 </div>
 
@@ -51,9 +54,32 @@ if (localStorage.getItem("login") !== "true") {
 <div id="dashboardPage" style="display:none;">
     <div class="about-box">
         <h3>📊 Dashboard</h3>
+
         <p>Total: <span id="total">0</span></p>
         <p>Pending: <span id="pending">0</span></p>
         <p>Solved: <span id="solved">0</span></p>
+
+        <canvas id="chart"></canvas>
+    </div>
+</div>
+
+<!-- PROFILE -->
+<div id="profilePage" style="display:none;">
+    <div class="about-box">
+        <h3>👤 Profile</h3>
+        <p>Username: admin</p>
+        <p>Role: Admin</p>
+        <p>Email: admin@example.com</p>
+    </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contactPage" style="display:none;">
+    <div class="about-box">
+        <h3>📞 Contact</h3>
+        <p>Email: support@complaint.com</p>
+        <textarea placeholder="Message..."></textarea><br>
+        <button onclick="alert('Message Sent')">Send</button>
     </div>
 </div>
 
