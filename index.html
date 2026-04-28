@@ -1,90 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>📢 Complaint Menu</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <title>📢 Complaint Menu</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
 <script>
-if (localStorage.getItem("login") !== "true") {
-    window.location.href = "login.html";
-}
+if (localStorage.getItem("login") !== "true") location.href="login.html";
 </script>
 
-<!-- HEADER -->
-<div class="header">
-    <h1>📢 Complaint Menu</h1>
+<header class="header">
+  <h1>📢 Complaint Menu</h1>
+  <nav>
+    <button onclick="route('home')">🏠</button>
+    <button onclick="route('dashboard')">📊</button>
+    <button onclick="route('profile')">👤</button>
+    <button onclick="route('contact')">📞</button>
+    <button onclick="toggleTheme()">🌙</button>
+    <button onclick="logout()">🚪</button>
+  </nav>
+</header>
 
-    <div>
-        <button onclick="showPage('home')">🏠</button>
-        <button onclick="showPage('about')">ℹ️</button>
-        <button onclick="showPage('dashboard')">📊</button>
-        <button onclick="showPage('profile')">👤</button>
-        <button onclick="showPage('contact')">📞</button>
-        <button onclick="toggleTheme()">🌙</button>
-        <button onclick="logout()">🚪</button>
+<main>
+  <!-- HOME -->
+  <section id="home">
+    <div class="card form">
+      <h3>Add Complaint</h3>
+      <input id="title" placeholder="Title">
+      <textarea id="desc" placeholder="Description"></textarea>
+      <select id="priority">
+        <option>Low</option><option>Medium</option><option>High</option>
+      </select>
+      <button onclick="addComplaint()">Add</button>
     </div>
-</div>
 
-<!-- HOME -->
-<div id="homePage">
-    <div class="form">
-        <h3>Add Complaint</h3>
-        <input id="title" placeholder="Complaint Title"><br>
-        <textarea id="desc" placeholder="Enter complaint..."></textarea><br>
-        <button onclick="addComplaint()">Submit</button>
+    <div class="card toolbar">
+      <input id="search" placeholder="🔍 search..." oninput="applyFilters()">
+      <select id="filterStatus" onchange="applyFilters()">
+        <option value="">All</option>
+        <option>Pending</option>
+        <option>Solved</option>
+      </select>
     </div>
 
-    <input id="search" placeholder="Search..." onkeyup="searchComplaint()">
+    <div id="list" class="grid"></div>
+  </section>
 
-    <div id="list"></div>
-</div>
-
-<!-- ABOUT -->
-<div id="aboutPage" style="display:none;">
-    <div class="about-box">
-        <h3>About Project</h3>
-        <p>This is a Complaint Menu system with dashboard and charts.</p>
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="hide">
+    <div class="card">
+      <h3>📊 Dashboard</h3>
+      <p>Total: <b id="total"></b></p>
+      <p>Pending: <b id="pending"></b></p>
+      <p>Solved: <b id="solved"></b></p>
+      <canvas id="chart"></canvas>
     </div>
-</div>
+  </section>
 
-<!-- DASHBOARD -->
-<div id="dashboardPage" style="display:none;">
-    <div class="about-box">
-        <h3>📊 Dashboard</h3>
-
-        <p>Total: <span id="total">0</span></p>
-        <p>Pending: <span id="pending">0</span></p>
-        <p>Solved: <span id="solved">0</span></p>
-
-        <canvas id="chart"></canvas>
+  <!-- PROFILE -->
+  <section id="profile" class="hide">
+    <div class="card">
+      <h3>👤 Profile</h3>
+      <input id="pname" placeholder="Name">
+      <input id="pemail" placeholder="Email">
+      <button onclick="saveProfile()">Save</button>
     </div>
-</div>
+  </section>
 
-<!-- PROFILE -->
-<div id="profilePage" style="display:none;">
-    <div class="about-box">
-        <h3>👤 Profile</h3>
-        <p>Username: admin</p>
-        <p>Role: Admin</p>
-        <p>Email: admin@example.com</p>
+  <!-- CONTACT -->
+  <section id="contact" class="hide">
+    <div class="card">
+      <h3>📞 Contact</h3>
+      <textarea id="msg" placeholder="Message..."></textarea>
+      <button onclick="sendMsg()">Send</button>
+      <div id="toast"></div>
     </div>
-</div>
+  </section>
+</main>
 
-<!-- CONTACT -->
-<div id="contactPage" style="display:none;">
-    <div class="about-box">
-        <h3>📞 Contact</h3>
-        <p>Email: support@complaint.com</p>
-        <textarea placeholder="Message..."></textarea><br>
-        <button onclick="alert('Message Sent')">Send</button>
-    </div>
-</div>
-
-<script src="storage.js"></script>
-<script src="script.js"></script>
-
+<script src="store.js"></script>
+<script src="ui.js"></script>
+<script src="app.js"></script>
 </body>
 </html>

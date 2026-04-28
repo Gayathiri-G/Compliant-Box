@@ -1,11 +1,6 @@
-function login() {
-    const u = document.getElementById("username").value;
-    const p = document.getElementById("password").value;
-
-    if (u === "admin" && p === "1234") {
-        localStorage.setItem("login","true");
-        window.location.href = "index.html";
-    } else {
-        alert("Invalid login");
-    }
+function login(){
+  if(username.value=="admin" && password.value=="1234"){
+    localStorage.setItem("login","true");
+    location.href="index.html";
+  } else alert("Invalid");
 }
