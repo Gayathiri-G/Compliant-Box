@@ -10,3 +10,25 @@
 body.dark .about-box {
     background: #1e1e1e;
 }
+.header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+}
+
+.about-box {
+    width: 400px;
+    margin: 30px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+body.dark {
+    background: #121212;
+    color: white;
+}
+
+body.dark .about-box {
+    background: #1e1e1e;
+}
