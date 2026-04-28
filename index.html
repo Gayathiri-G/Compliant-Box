@@ -12,48 +12,45 @@ if (localStorage.getItem("login") !== "true") {
 }
 </script>
 
-<!-- 🔝 Header -->
+<!-- HEADER -->
 <div class="header">
-    <h1>📢 Complaint Menu</h1>
+    <h1 class="logo">📢 Complaint Menu</h1>
 
-    <div>
-        <button onclick="showPage('home')">🏠 Home</button>
-        <button onclick="showPage('about')">ℹ️ About</button>
-        <button onclick="toggleTheme()">🌙 Theme</button>
-        <button onclick="logout()">🚪 Logout</button>
+    <div class="nav">
+        <button onclick="showPage('home')">🏠</button>
+        <button onclick="showPage('about')">ℹ️</button>
+        <button onclick="toggleTheme()">🌙</button>
+        <button onclick="logout()">🚪</button>
     </div>
 </div>
 
-<!-- 📝 HOME PAGE -->
+<!-- HOME PAGE -->
 <div id="homePage">
 
-    <div class="form">
-        <h3>Add Complaint</h3>
-        <input id="title" placeholder="Complaint Title"><br>
-        <textarea id="desc" placeholder="Enter complaint..."></textarea><br>
-        <button onclick="addComplaint()">Submit</button>
-    </div>
+<div class="form glass">
+    <h3>Add Complaint</h3>
+    <input id="title" placeholder="Complaint Title">
+    <textarea id="desc" placeholder="Enter complaint..."></textarea>
+    <button onclick="addComplaint()">🚀 Submit</button>
+</div>
 
-    <input id="search" placeholder="Search complaints..." onkeyup="searchComplaint()">
+<input id="search" placeholder="🔍 Search complaints..." onkeyup="searchComplaint()">
 
-    <div id="list"></div>
+<div id="list" class="grid"></div>
 
 </div>
 
-<!-- ℹ️ ABOUT PAGE -->
+<!-- ABOUT PAGE -->
 <div id="aboutPage" style="display:none;">
     <div class="about-box">
-        <h3>About This Project</h3>
-        <p>This is a Digital Complaint Menu system.</p>
-
+        <h3>About Project</h3>
+        <p>This is a modern Complaint Menu system.</p>
         <ul>
-            <li>Add complaints</li>
-            <li>Search complaints</li>
-            <li>Delete complaints</li>
-            <li>Dark/Light theme</li>
+            <li>Add / Delete complaints</li>
+            <li>Search functionality</li>
+            <li>Status tracking</li>
+            <li>Dark mode UI</li>
         </ul>
-
-        <p>Built using HTML, CSS, JavaScript and deployed using Jenkins CI/CD.</p>
     </div>
 </div>
 

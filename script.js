@@ -1,4 +1,3 @@
-// Load data
 window.onload = function () {
     displayComplaints(getComplaints());
 
@@ -7,20 +6,17 @@ window.onload = function () {
     }
 };
 
-// Add complaint
 function addComplaint() {
     const title = document.getElementById("title").value.trim();
     const desc = document.getElementById("desc").value.trim();
 
-    if (!title || !desc) {
-        alert("Enter all fields");
-        return;
-    }
+    if (!title || !desc) return alert("Fill all fields");
 
     const complaint = {
         id: Date.now(),
         title,
         desc,
+        status: "Pending",
         date: new Date().toLocaleString()
     };
 
@@ -34,7 +30,6 @@ function addComplaint() {
     document.getElementById("desc").value = "";
 }
 
-// Display complaints
 function displayComplaints(data) {
     const list = document.getElementById("list");
     list.innerHTML = "";
@@ -46,22 +41,32 @@ function displayComplaints(data) {
         div.innerHTML = `
             <h3>${item.title}</h3>
             <p>${item.desc}</p>
-            <small>${item.date}</small><br>
-            <button onclick="deleteComplaint(${item.id})">Delete</button>
+            <span class="status ${item.status.toLowerCase()}">${item.status}</span>
+            <br><small>${item.date}</small><br>
+            <button onclick="markSolved(${item.id})">✔ Solve</button>
+            <button onclick="deleteComplaint(${item.id})">❌ Delete</button>
         `;
 
         list.appendChild(div);
     });
 }
 
-// Delete
 function deleteComplaint(id) {
     let data = getComplaints().filter(c => c.id !== id);
     saveComplaints(data);
     displayComplaints(data);
 }
 
-// Search
+function markSolved(id) {
+    let data = getComplaints().map(c => {
+        if (c.id === id) c.status = "Solved";
+        return c;
+    });
+
+    saveComplaints(data);
+    displayComplaints(data);
+}
+
 function searchComplaint() {
     const value = document.getElementById("search").value.toLowerCase();
     const data = getComplaints();
@@ -74,28 +79,22 @@ function searchComplaint() {
     displayComplaints(filtered);
 }
 
-// Page switch
 function showPage(page) {
-    const home = document.getElementById("homePage");
-    const about = document.getElementById("aboutPage");
-
-    home.style.display = "none";
-    about.style.display = "none";
+    document.getElementById("homePage").style.display = "none";
+    document.getElementById("aboutPage").style.display = "none";
 
     if (page === "home") {
-        home.style.display = "block";
+        document.getElementById("homePage").style.display = "block";
     } else {
-        about.style.display = "block";
+        document.getElementById("aboutPage").style.display = "block";
     }
 }
 
-// Logout
 function logout() {
     localStorage.removeItem("login");
     window.location.href = "login.html";
 }
 
-// Theme
 function toggleTheme() {
     document.body.classList.toggle("dark");
 
