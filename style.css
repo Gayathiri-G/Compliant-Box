@@ -21,12 +21,6 @@ body {
     text-align: center;
 }
 
-.login-container input {
-    width: 90%;
-    padding: 10px;
-    margin: 10px;
-}
-
 /* Header */
 .header {
     display: flex;
@@ -42,7 +36,7 @@ body {
     color: white;
 }
 
-/* Glass */
+/* Glass UI */
 .glass {
     background: rgba(255,255,255,0.1);
     padding: 20px;
@@ -98,7 +92,7 @@ input, textarea {
     border-radius: 10px;
 }
 
-/* Dark mode */
+/* Dark Mode */
 body.dark {
     background: #121212;
 }
